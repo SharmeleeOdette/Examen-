@@ -1,0 +1,131 @@
+public class Cliente {
+    private String nombre;
+    private String genero;
+
+    public Cliente(String nombre, String genero) {
+        this.nombre = nombre;
+        this.genero = genero;
+    }
+
+    // Getters y setters
+}
+
+public class Libro {
+    private String titulo;
+    private int tipo; // 1-Ficción / 2-Novelas / 3-Cuentos / 4-Física Cuántica
+    private double precio;
+
+    public Libro(String titulo, int tipo) {
+        this.titulo = titulo;
+        this.tipo = tipo;
+        // Asignar precio según el tipo de libro
+        switch (tipo) {
+            case 1: // Ficción
+                this.precio = 90.00;
+                break;
+            case 2: // Novelas
+                this.precio = 100.00;
+                break;
+            case 3: // Cuentos
+                this.precio = 80.00;
+                break;
+            case 4: // Física Cuántica
+                this.precio = 150.00;
+                break;
+            default:
+                this.precio = 0.00; // Tipo de libro inválido
+        }
+    }
+
+    // Getters y setters
+}
+
+public class Venta {
+    private Cliente cliente;
+    private Libro libro;
+    private int cantidad;
+
+    public Venta(Cliente cliente, Libro libro, int cantidad) {
+        this.cliente = cliente;
+        this.libro = libro;
+        this.cantidad = cantidad;
+    }
+
+    public double calcularImporteBruto() {
+        return cantidad * libro.getPrecio();
+    }
+
+    public double calcularPorcentajeDescuento() {
+        int tipoLibro = libro.getTipo();
+        double porcentajeDescuento;
+
+        if (cantidad >= 1 && cantidad <= 2) {
+            switch (tipoLibro) {
+                case 1: // Ficción
+                    porcentajeDescuento = 0.05;
+                    break;
+                case 2: // Novelas
+                    porcentajeDescuento = 0.08;
+                    break;
+                case 3: // Cuentos
+                    porcentajeDescuento = 0.09;
+                    break;
+                case 4: // Física Cuántica
+                    porcentajeDescuento = 0.02;
+                    break;
+                default:
+                    porcentajeDescuento = 0.00; // Tipo de libro inválido
+            }
+        } else if (cantidad >= 3 && cantidad <= 6) {
+            switch (tipoLibro) {
+                case 1: // Ficción
+                    porcentajeDescuento = 0.06;
+                    break;
+                case 2: // Novelas
+                    porcentajeDescuento = 0.16;
+                    break;
+                case 3: // Cuentos
+                    porcentajeDescuento = 0.18;
+                    break;
+                case 4: // Física Cuántica
+                    porcentajeDescuento = 0.02;
+                    break;
+                default:
+                    porcentajeDescuento = 0.00; // Tipo de libro inválido
+            }
+        } else {
+            switch (tipoLibro) {
+                case 1: // Ficción
+                    porcentajeDescuento = 0.08;
+                    break;
+                case 2: // Novelas
+                    porcentajeDescuento = 0.32;
+                    break;
+                case 3: // Cuentos
+                    porcentajeDescuento = 0.36;
+                    break;
+                case 4: // Física Cuántica
+                    porcentajeDescuento = 0.04;
+                    break;
+                default:
+                    porcentajeDescuento = 0.00; // Tipo de libro inválido
+            }
+        }
+
+        return porcentajeDescuento;
+    }
+
+    public double calcularMontoDescuento() {
+        double importeBruto = calcularImporteBruto();
+        double porcentajeDescuento = calcularPorcentajeDescuento();
+        return importeBruto * porcentajeDescuento;
+    }
+
+    public double calcularImporteNeto() {
+        double importeBruto = calcularImporteBruto();
+        double montoDescuento = calcularMontoDescuento();
+        return importeBruto - montoDescuento;
+    }
+
+    // Getters y setters
+}
